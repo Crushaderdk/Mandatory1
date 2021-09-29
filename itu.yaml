@@ -420,7 +420,7 @@ definitions:
         format: "int64"
       name:
         type: "string"
-        example: "doggie"
+        example: "Brian"
       courses:
         type: array
         items:
