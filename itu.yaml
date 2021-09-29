@@ -345,6 +345,100 @@ paths:
           description: "Invalid teachername supplied"
         "404":
           description: "Teacher not found"
+
+  /course:
+    post:
+      tags:
+        - "course"
+      summary: "Create course"
+      description: "It is a course"
+      operationId: "createCourse"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Created course object"
+          required: true
+          schema:
+            $ref: "#/definitions/Course"
+      responses:
+        default:
+          description: "Successful operation"
+
+  /course/{name}:
+    get:
+      tags:
+        - "course"
+      summary: "Get course by name"
+      description: ""
+      operationId: "getCourseByName"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - name: "name"
+          in: "path"
+          description: "The name that needs to be fetched. "
+          required: true
+          type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Course"
+        "400":
+          description: "Invalid course supplied"
+        "404":
+          description: "Course not found"
+    put:
+      tags:
+        - "course"
+      summary: "Updated course"
+      description: ""
+      operationId: "updateCourse"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - name: "name"
+          in: "path"
+          description: "name that need to be updated"
+          required: true
+          type: "string"
+        - in: "body"
+          name: "body"
+          description: "Updated course object"
+          required: true
+          schema:
+            $ref: "#/definitions/Course"
+      responses:
+        "400":
+          description: "Invalid course supplied"
+        "404":
+          description: "Course not found"
+    delete:
+      tags:
+        - "course"
+      summary: "Delete course"
+      description: ""
+      operationId: "deleteCourse"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - name: "name"
+          in: "path"
+          description: "The name that needs to be deleted"
+          required: true
+          type: "string"
+      responses:
+        "400":
+          description: "Invalid course supplied"
+        "404":
+          description: "Course not found"
+
 securityDefinitions:
   studentcourse_auth:
     type: "oauth2"
@@ -447,6 +541,3 @@ definitions:
         type: "string"
       message:
         type: "string"
-externalDocs:
-  description: "Find out more about Swagger"
-  url: "http://swagger.io"
