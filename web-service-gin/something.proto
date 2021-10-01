@@ -1,0 +1,31 @@
+syntax = "proto3";
+package DISYSMandatoryExercise1;
+
+option go_package = "DISYS-Mandatory-Exercise1/main";
+
+
+
+service CourseManager {
+  rpc getCourses(getCoursesRequest) returns (ReturnCourses) {};
+  rpc getCourseByID(getCourseByIDRequest) returns (ReturnCourse) {};
+}
+
+message Empty {
+
+}
+
+message getCoursesRequest {
+
+}
+
+message getCourseByIDRequest {
+
+}
+
+message ReturnCourses {
+  string courses = 1;
+}
+
+message ReturnCourse {
+  string course = 1;
+}
