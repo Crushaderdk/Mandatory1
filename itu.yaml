@@ -460,6 +460,7 @@ definitions:
         format: "int64"
       name:
         type: "string"
+        format: "string"
       students:
         type: array
         items:
@@ -475,11 +476,11 @@ definitions:
             id:
               type: integer
       workload:
-        type: number
-        format: double
+        type: "number"
+        format: "float"
       studentSatisfactionRating:
-        type: number
-        format: double
+        type: "number"
+        format: "float"
     xml:
       name: "Course"
   Teacher:
