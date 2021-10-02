@@ -27,32 +27,22 @@ func main() {
 	router.GET("/courses", getCourse)
 	router.GET("/courses/:id", getCourseByID)
 	router.POST("/courses", postCourse)
-
 	router.Run("localhost:8080")
 }
 
-// postCourses adds an album from JSON received in the request body.
 func postCourse(c *gin.Context) {
 	var newCourse course
-
-	// Call BindJSON to bind the received JSON to
-	// newCourse.
 	if err := c.BindJSON(&newCourse); err != nil {
 		return
 	}
 
-	// Add the new album to the slice.
 	courses = append(courses, newCourse)
 	c.IndentedJSON(http.StatusCreated, newCourse)
 }
 
-// getCourseByID locates the album whose ID value matches the id
-// parameter sent by the client, then returns that album as a response.
 func getCourseByID(c *gin.Context) {
 	id := c.Param("id")
 
-	// Loop over the list of courses, looking for
-	// an album whose ID value matches the parameter.
 	for _, a := range courses {
 		if a.ID == id {
 			c.IndentedJSON(http.StatusOK, a)

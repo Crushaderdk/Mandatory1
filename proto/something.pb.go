@@ -4,7 +4,7 @@
 // 	protoc        v3.18.0
 // source: something.proto
 
-package main
+package proto
 
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
