@@ -5,7 +5,7 @@ option go_package = "DISYS-Mandatory-Exercise1/main";
 
 
 
-service CourseManager {
+service CourseService {
   rpc getCourses(getCoursesRequest) returns (ReturnCourses) {};
   rpc getCourseByID(getCourseByIDRequest) returns (ReturnCourse) {};
 }
@@ -14,11 +14,11 @@ message Empty {
 }
 
 message getCoursesRequest {
-
+string request = 1;
 }
 
 message getCourseByIDRequest {
-
+string request = 1;
 }
 
 message ReturnCourses {
@@ -27,4 +27,14 @@ message ReturnCourses {
 
 message ReturnCourse {
   string course = 1;
+}
+
+message PostCourseRequest {
+  string id = 1;
+  string title = 2;
+  string teacher = 3;
+}
+
+message PostCourseReply {
+  string reply = 1;
 }
