@@ -1,11 +1,10 @@
-module v1
+module github.com/Crushaderdk/Mandatory1
+
 
 require (
 	github.com/gin-gonic/gin v1.7.4
 	google.golang.org/grpc v1.41.0
-	google.golang.org/grpc/examples v0.0.0-20211001222728-09970207abb5
 	google.golang.org/protobuf v1.27.1
-	github.com/Crushaderdk/Mandatory1/proto v0.0.0-20211003120230-f955693af636
 )
 
 require (
