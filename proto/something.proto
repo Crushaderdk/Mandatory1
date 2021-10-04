@@ -1,7 +1,7 @@
 syntax = "proto3";
 package DISYSMandatoryExercise1;
 
-option go_package = "DISYS-Mandatory-Exercise1/main";
+option go_package = "Mandatory1/proto";
 
 
 

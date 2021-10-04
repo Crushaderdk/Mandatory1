@@ -2,8 +2,8 @@ package main
 
 import (
 	"context"
+	pb "github.com/Crushaderdk/Mandatory1/proto"
 	"google.golang.org/grpc"
-	pb "google.golang.org/grpc/examples/helloworld/helloworld"
 	"log"
 	"os"
 	"time"
