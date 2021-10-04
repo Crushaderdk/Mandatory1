@@ -50,19 +50,7 @@ func main() {
 	}
 }
 
-/*
-func postCourse(c *gin.Context) {
-	var newCourse course
-	if err := c.BindJSON(&newCourse); err != nil {
-		return
-	}
-
-	courses = append(courses, newCourse)
-	c.IndentedJSON(http.StatusCreated, newCourse)
-}
-
-*/
-func (s *server) postCourse(in *pb.PostCourseRequest) (*pb.PostCourseReply, error) {
+func (s *server) PostCourse(ctx context.Context, in *pb.PostCourseRequest) (*pb.PostCourseReply, error) {
 	log.Printf("Received: %s, %s, %s, %s", in.Id, in.Name, in.Workload, in.Studentsatisfactionrating)
 	workload, _ := strconv.ParseFloat(in.Workload, 64)
 	studentSatisfactionRating, _ := strconv.ParseFloat(in.Studentsatisfactionrating, 64)
@@ -82,4 +70,15 @@ func (s *server) GetCourseByID(ctx context.Context, in *pb.GetCourseByIDRequest)
 	}
 
 	return &pb.ReturnCourse{}, nil
+}
+
+func (s *server) GetCourses(ctx context.Context, in *pb.GetCoursesRequest) (*pb.ReturnCourses, error) {
+	log.Printf("Received: %v", in.GetRequest())
+	var returnString = "Courses:\n"
+	for _, a := range courses {
+		courseString := fmt.Sprintf("Course: %s, Workload: %.1f, Student Satisfaction Rating: %.1f", a.Name, a.Workload, a.StudentSatisfactionRating)
+		returnString += fmt.Sprintf("%s \n", courseString)
+	}
+
+	return &pb.ReturnCourses{Courses: returnString}, nil
 }

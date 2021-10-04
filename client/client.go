@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	pb "github.com/Crushaderdk/Mandatory1/proto"
 	"google.golang.org/grpc"
 	"log"
@@ -39,7 +40,18 @@ func main() {
 			log.Printf(r.GetCourse())
 
 		} else if os.Args[1] == "post" {
-
+			r, err := c.PostCourse(ctx, &pb.PostCourseRequest{Id: os.Args[2], Name: os.Args[3], Workload: os.Args[4], Studentsatisfactionrating: os.Args[5]})
+			if err != nil {
+				log.Fatalf("400 wrong input: %v", err)
+			}
+			r.Reply = fmt.Sprintf("Course posted:\n Course ID: %s, Name: %s, Workload: %s, Student Satisfaction Rating: %s", os.Args[2], os.Args[3], os.Args[4], os.Args[5])
+			log.Printf(r.Reply)
+		} else if os.Args[1] == "getAll" {
+			r, err := c.GetCourses(ctx, &pb.GetCoursesRequest{})
+			if err != nil {
+				log.Fatalf("could not output course: %v", err)
+			}
+			log.Printf(r.GetCourses())
 		} else {
 			log.Printf("400: bad request")
 		}
