@@ -8,6 +8,7 @@ option go_package = "github.com/Crushaderdk/Mandatory1/proto";
 service CourseService {
   rpc GetCourses(getCoursesRequest) returns (ReturnCourses) {};
   rpc GetCourseByID(getCourseByIDRequest) returns (ReturnCourse) {};
+  rpc PostCourse(PostCourseRequest) returns (PostCourseReply){};
 }
 
 message Empty {

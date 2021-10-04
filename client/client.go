@@ -25,14 +25,23 @@ func main() {
 
 	// Contact the server and print out its response.
 	id := defaultID
+
 	if len(os.Args) > 1 {
-		id = os.Args[1]
+		ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+		defer cancel()
+		if os.Args[1] == "getById" {
+			id = os.Args[2]
+
+			r, err := c.GetCourseByID(ctx, &pb.GetCourseByIDRequest{Request: id})
+			if err != nil {
+				log.Fatalf("could not output course: %v", err)
+			}
+			log.Printf(r.GetCourse())
+
+		} else if os.Args[1] == "post" {
+
+		} else {
+			log.Printf("400: bad request")
+		}
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
-	defer cancel()
-	r, err := c.GetCourseByID(ctx, &pb.GetCourseByIDRequest{Request: id})
-	if err != nil {
-		log.Fatalf("could not output course: %v", err)
-	}
-	log.Printf("Greeting: %s", r.GetCourse())
 }

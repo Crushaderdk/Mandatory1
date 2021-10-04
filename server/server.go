@@ -2,12 +2,14 @@ package main
 
 import (
 	"context"
+	"fmt"
 	pb "github.com/Crushaderdk/Mandatory1/proto"
 	"github.com/gin-gonic/gin"
 	"google.golang.org/grpc"
 	"log"
 	"net"
 	"net/http"
+	"strconv"
 )
 
 const (
@@ -48,6 +50,7 @@ func main() {
 	}
 }
 
+/*
 func postCourse(c *gin.Context) {
 	var newCourse course
 	if err := c.BindJSON(&newCourse); err != nil {
@@ -58,19 +61,25 @@ func postCourse(c *gin.Context) {
 	c.IndentedJSON(http.StatusCreated, newCourse)
 }
 
-/*func getCourseByID(c *gin.Context) {
-	id := c.Param("id")
-
-	for _, a := range courses {
-		if a.ID == id {
-			c.IndentedJSON(http.StatusOK, a)
-			return
-		}
-	}
-	c.IndentedJSON(http.StatusNotFound, gin.H{"message": "course not found"})
-}*/
+*/
+func (s *server) postCourse(in *pb.PostCourseRequest) (*pb.PostCourseReply, error) {
+	log.Printf("Received: %s, %s, %s, %s", in.Id, in.Name, in.Workload, in.Studentsatisfactionrating)
+	workload, _ := strconv.ParseFloat(in.Workload, 64)
+	studentSatisfactionRating, _ := strconv.ParseFloat(in.Studentsatisfactionrating, 64)
+	var newCourse = course{ID: in.Id, Name: in.Name, Workload: workload, StudentSatisfactionRating: studentSatisfactionRating}
+	courses = append(courses, newCourse)
+	return &pb.PostCourseReply{}, nil
+}
 
 func (s *server) GetCourseByID(ctx context.Context, in *pb.GetCourseByIDRequest) (*pb.ReturnCourse, error) {
 	log.Printf("Received: %v", in.GetRequest())
-	return &pb.ReturnCourse{Course: pb.GetCourseByIDRequest{}}, nil
+
+	for _, a := range courses {
+		if a.ID == in.Request {
+			returnString := fmt.Sprintf("Course: %s, Workload: %.1f, Student Satisfaction Rating: %.1f", a.Name, a.Workload, a.StudentSatisfactionRating)
+			return &pb.ReturnCourse{Course: returnString}, nil
+		}
+	}
+
+	return &pb.ReturnCourse{}, nil
 }
