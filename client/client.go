@@ -10,8 +10,8 @@ import (
 )
 
 const (
-	address     = "localhost:8080"
-	defaultName = "world"
+	address   = "localhost:8080"
+	defaultID = "1"
 )
 
 func main() {
@@ -21,18 +21,18 @@ func main() {
 		log.Fatalf("did not connect: %v", err)
 	}
 	defer conn.Close()
-	c := pb.NewGreeterClient(conn)
+	c := pb.NewCourseServiceClient(conn)
 
 	// Contact the server and print out its response.
-	name := defaultName
+	id := defaultID
 	if len(os.Args) > 1 {
-		name = os.Args[1]
+		id = os.Args[1]
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 	defer cancel()
-	r, err := c.SayHello(ctx, &pb.GetCourseByIDRequest{Name: name})
+	r, err := c.GetCourseByID(ctx, &pb.GetCourseByIDRequest{Request: id})
 	if err != nil {
 		log.Fatalf("could not greet: %v", err)
 	}
-	log.Printf("Greeting: %s", r.GetMessage())
+	log.Printf("Greeting: %s", r.GetCourse())
 }
