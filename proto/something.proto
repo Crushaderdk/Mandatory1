@@ -1,13 +1,13 @@
 syntax = "proto3";
-package DISYSMandatoryExercise1;
+package proto;
 
-option go_package = "Mandatory1/proto";
+option go_package = "github.com/Crushaderdk/Mandatory1/proto";
 
 
 
 service CourseService {
-  rpc getCourses(getCoursesRequest) returns (ReturnCourses) {};
-  rpc getCourseByID(getCourseByIDRequest) returns (ReturnCourse) {};
+  rpc GetCourses(getCoursesRequest) returns (ReturnCourses) {};
+  rpc GetCourseByID(getCourseByIDRequest) returns (ReturnCourse) {};
 }
 
 message Empty {
@@ -31,8 +31,9 @@ message ReturnCourse {
 
 message PostCourseRequest {
   string id = 1;
-  string title = 2;
-  string teacher = 3;
+  string name = 2;
+  string workload = 3;
+  string studentsatisfactionrating = 4;
 }
 
 message PostCourseReply {

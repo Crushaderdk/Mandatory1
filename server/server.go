@@ -1,8 +1,17 @@
 package main
 
 import (
+	"context"
+	pb "github.com/Crushaderdk/Mandatory1/proto"
 	"github.com/gin-gonic/gin"
+	"google.golang.org/grpc"
+	"log"
+	"net"
 	"net/http"
+)
+
+const (
+	port = ":8080"
 )
 
 type course struct {
@@ -22,12 +31,21 @@ func getCourse(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, courses)
 }
 
+type server struct {
+	pb.UnimplementedCourseServiceServer
+}
+
 func main() {
-	router := gin.Default()
-	router.GET("/courses", getCourse)
-	router.GET("/courses/:id", getCourseByID)
-	router.POST("/courses", postCourse)
-	router.Run("localhost:8080")
+	lis, err := net.Listen("tcp", port)
+	if err != nil {
+		log.Fatalf("failed to listen: %v", err)
+	}
+	s := grpc.NewServer()
+	pb.RegisterCourseServiceServer(s, &server{})
+	log.Printf("server listening at %v", lis.Addr())
+	if err := s.Serve(lis); err != nil {
+		log.Fatalf("failed to serve: %v", err)
+	}
 }
 
 func postCourse(c *gin.Context) {
@@ -40,7 +58,7 @@ func postCourse(c *gin.Context) {
 	c.IndentedJSON(http.StatusCreated, newCourse)
 }
 
-func getCourseByID(c *gin.Context) {
+/*func getCourseByID(c *gin.Context) {
 	id := c.Param("id")
 
 	for _, a := range courses {
@@ -50,4 +68,9 @@ func getCourseByID(c *gin.Context) {
 		}
 	}
 	c.IndentedJSON(http.StatusNotFound, gin.H{"message": "course not found"})
+}*/
+
+func (s *server) GetCourseByID(ctx context.Context, in *pb.GetCourseByIDRequest) (*pb.ReturnCourse, error) {
+	log.Printf("Received: %v", in.GetRequest())
+	return &pb.ReturnCourse{Course: pb.GetCourseByIDRequest{}}, nil
 }

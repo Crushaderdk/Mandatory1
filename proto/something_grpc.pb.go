@@ -32,7 +32,7 @@ func NewCourseServiceClient(cc grpc.ClientConnInterface) CourseServiceClient {
 
 func (c *courseServiceClient) GetCourses(ctx context.Context, in *GetCoursesRequest, opts ...grpc.CallOption) (*ReturnCourses, error) {
 	out := new(ReturnCourses)
-	err := c.cc.Invoke(ctx, "/DISYSMandatoryExercise1.CourseService/getCourses", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/proto.CourseService/GetCourses", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -41,7 +41,7 @@ func (c *courseServiceClient) GetCourses(ctx context.Context, in *GetCoursesRequ
 
 func (c *courseServiceClient) GetCourseByID(ctx context.Context, in *GetCourseByIDRequest, opts ...grpc.CallOption) (*ReturnCourse, error) {
 	out := new(ReturnCourse)
-	err := c.cc.Invoke(ctx, "/DISYSMandatoryExercise1.CourseService/getCourseByID", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/proto.CourseService/GetCourseByID", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -90,7 +90,7 @@ func _CourseService_GetCourses_Handler(srv interface{}, ctx context.Context, dec
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/DISYSMandatoryExercise1.CourseService/getCourses",
+		FullMethod: "/proto.CourseService/GetCourses",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(CourseServiceServer).GetCourses(ctx, req.(*GetCoursesRequest))
@@ -108,7 +108,7 @@ func _CourseService_GetCourseByID_Handler(srv interface{}, ctx context.Context, 
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/DISYSMandatoryExercise1.CourseService/getCourseByID",
+		FullMethod: "/proto.CourseService/GetCourseByID",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(CourseServiceServer).GetCourseByID(ctx, req.(*GetCourseByIDRequest))
@@ -120,15 +120,15 @@ func _CourseService_GetCourseByID_Handler(srv interface{}, ctx context.Context, 
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var CourseService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "DISYSMandatoryExercise1.CourseService",
+	ServiceName: "proto.CourseService",
 	HandlerType: (*CourseServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "getCourses",
+			MethodName: "GetCourses",
 			Handler:    _CourseService_GetCourses_Handler,
 		},
 		{
-			MethodName: "getCourseByID",
+			MethodName: "GetCourseByID",
 			Handler:    _CourseService_GetCourseByID_Handler,
 		},
 	},

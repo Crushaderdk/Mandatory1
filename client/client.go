@@ -32,7 +32,7 @@ func main() {
 	defer cancel()
 	r, err := c.GetCourseByID(ctx, &pb.GetCourseByIDRequest{Request: id})
 	if err != nil {
-		log.Fatalf("could not greet: %v", err)
+		log.Fatalf("could not output course: %v", err)
 	}
 	log.Printf("Greeting: %s", r.GetCourse())
 }
